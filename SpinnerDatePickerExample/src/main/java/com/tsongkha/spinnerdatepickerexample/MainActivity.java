@@ -1,15 +1,14 @@
 package com.tsongkha.spinnerdatepickerexample;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.tsongkha.spinnerdatepicker.DatePicker;
 import com.tsongkha.spinnerdatepicker.DatePickerDialog;
+import com.tsongkha.spinnerdatepicker.OnDateChangedListener;
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder;
 
 import java.text.SimpleDateFormat;
@@ -17,11 +16,15 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * Created by rawsond on 25/08/17.
  */
 
-public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener , DatePickerDialog.OnDateCancelListener{
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, DatePickerDialog.OnDateCancelListener, OnDateChangedListener {
 
     TextView dateTextView;
     Button dateButton;
@@ -40,6 +43,18 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 showDate(1980, 0, 1, R.style.DatePickerSpinner);
             }
         });
+
+
+        FrameLayout frameLayout = findViewById(R.id.lay_picker);
+
+        Calendar defaultDate = new GregorianCalendar(1980, 0, 1);
+        Calendar minDate = new GregorianCalendar(1900, 0, 1);
+        Calendar maxDate = new GregorianCalendar(2100, 0, 1);
+
+        DatePicker picker = new DatePicker(frameLayout, R.style.DatePickerSpinner);
+        picker.setMinDate(minDate.getTimeInMillis());
+        picker.setMaxDate(maxDate.getTimeInMillis());
+        picker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), true, MainActivity.this);
     }
 
     @Override
@@ -67,4 +82,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
 
+    @Override public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        onDateSet(view, year, monthOfYear, dayOfMonth);
+    }
 }

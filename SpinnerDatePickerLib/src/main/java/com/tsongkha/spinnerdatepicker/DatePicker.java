@@ -87,7 +87,7 @@ public class DatePicker extends FrameLayout {
 
     private boolean mIsDayShown = true;
 
-    DatePicker(ViewGroup root, int numberPickerStyle) {
+    public DatePicker(ViewGroup root, int numberPickerStyle) {
         super(root.getContext());
         mContext = root.getContext();
 
@@ -179,7 +179,7 @@ public class DatePicker extends FrameLayout {
         root.addView(this);
     }
 
-    void init(int year, int monthOfYear, int dayOfMonth,
+    public void init(int year, int monthOfYear, int dayOfMonth,
               boolean isDayShown, OnDateChangedListener onDateChangedListener) {
         mIsDayShown = isDayShown;
         setDate(year, monthOfYear, dayOfMonth);
@@ -209,7 +209,7 @@ public class DatePicker extends FrameLayout {
         return mCurrentDate.get(Calendar.DAY_OF_MONTH);
     }
 
-    void setMinDate(long minDate) {
+    public void setMinDate(long minDate) {
         mTempDate.setTimeInMillis(minDate);
         if (mTempDate.get(Calendar.YEAR) == mMinDate.get(Calendar.YEAR)
                 && mTempDate.get(Calendar.DAY_OF_YEAR) == mMinDate.get(Calendar.DAY_OF_YEAR)) {
@@ -223,7 +223,7 @@ public class DatePicker extends FrameLayout {
         updateSpinners();
     }
 
-    void setMaxDate(long maxDate) {
+    public void setMaxDate(long maxDate) {
         mTempDate.setTimeInMillis(maxDate);
         if (mTempDate.get(Calendar.YEAR) == mMaxDate.get(Calendar.YEAR)
                 && mTempDate.get(Calendar.DAY_OF_YEAR) == mMaxDate.get(Calendar.DAY_OF_YEAR)) {
