@@ -1,13 +1,11 @@
-[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=18) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SpinnerDatePicker-red.svg?style=plastic)](https://android-arsenal.com/details/1/6319) [![Release](https://jitpack.io/v/drawers/SpinnerDatePicker.svg)](https://jitpack.io/#drawers/SpinnerDatePicker)
+[![Release](https://jitpack.io/v/francescopedronomnys/SpinnerDatePicker.svg)](https://jitpack.io/#francescopedronomnys/SpinnerDatePicker)
 
 ~~Spinner DatePicker~~
 -----
 
 # Deprecation
  
-This repo is no longer being maintained due to time constraints. #sorrynotsorry
-
-If you wish to transfer ownership then please contact the author via issues.
+This repo is a fork of [this](https://github.com/drawers/SpinnerDatePicker) repo, it is not continuously maintained.
 
 ## Summary
 
@@ -72,19 +70,10 @@ Add this to your **app level** `build.gradle`:
     
    ```gradle
    dependencies {
-       compile 'com.github.drawers:SpinnerDatePicker:2.0.1'
+       implementation 'com.github.francescopedronomnys:SpinnerDatePicker:2.2.0'
    }
    ```             
 
-Philosophy
-==========
-
-The aim of this project is to produce a lightweight and robust DatePicker with an API similar to that of the standard Android DatePicker. Hence the library has no external dependencies and no fancy features. Espresso automated UI testing is performed on the sample project using Firebase test lab.
-
-Contributing
-============
-
-Please open an issue first before making a pull request. Pull requests should be accompanied by tests if possible.
 
 License
 =======
