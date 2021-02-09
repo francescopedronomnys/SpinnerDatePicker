@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.appcompat.app.AlertDialog;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -29,6 +31,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     private final DateFormat mTitleDateFormat;
 
     private boolean mIsDayShown = true;
+    private boolean mIsMonthShown = true;
     private boolean mIsTitleShown = true;
     private String mCustomTitle = "";
 
@@ -67,6 +70,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                      Calendar minDate,
                      Calendar maxDate,
                      boolean isDayShown,
+                     boolean isMonthShown,
                      boolean isTitleShown,
                      String customTitle) {
         super(context, theme);
@@ -75,6 +79,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mOnCancel = onCancel;
         mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         mIsDayShown = isDayShown;
+        mIsMonthShown = isMonthShown;
         mIsTitleShown = isTitleShown;
         mCustomTitle = customTitle;
 
@@ -92,8 +97,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mDatePicker = new DatePicker((ViewGroup) view, spinnerTheme);
         mDatePicker.setMinDate(minDate.getTimeInMillis());
         mDatePicker.setMaxDate(maxDate.getTimeInMillis());
-        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), isDayShown, this);
-
+        mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), isDayShown, isMonthShown, this);
     }
 
     @Override
@@ -161,6 +165,6 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, day);
         updateTitle(c);
-        mDatePicker.init(year, month, day, mIsDayShown, this);
+        mDatePicker.init(year, month, day, mIsDayShown, mIsMonthShown, this);
     }
 }

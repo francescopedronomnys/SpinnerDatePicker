@@ -6,6 +6,10 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.tsongkha.spinnerdatepicker.DatePicker;
 import com.tsongkha.spinnerdatepicker.DatePickerDialog;
 import com.tsongkha.spinnerdatepicker.OnDateChangedListener;
@@ -15,10 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by rawsond on 25/08/17.
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         DatePicker picker = new DatePicker(frameLayout, R.style.DatePickerSpinner);
         picker.setMinDate(minDate.getTimeInMillis());
         picker.setMaxDate(maxDate.getTimeInMillis());
-        picker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), true, MainActivity.this);
+        picker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), true, false, MainActivity.this);
     }
 
     @Override
@@ -82,7 +82,8 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
 
-    @Override public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+    @Override
+    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         onDateSet(view, year, monthOfYear, dayOfMonth);
     }
 }
