@@ -3,6 +3,7 @@ package com.tsongkha.spinnerdatepicker;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
 import androidx.appcompat.app.AlertDialog;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * A fork of the Android Open Source Project DatePickerDialog class
@@ -77,7 +80,13 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 
         mCallBack = callBack;
         mOnCancel = onCancel;
-        mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
+        if (isDayShown && isMonthShown) {
+            mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
+        } else if (isMonthShown) {
+            mTitleDateFormat = new SimpleDateFormat("MMMM yyyy", getLocale(context));
+        } else {
+            mTitleDateFormat = new SimpleDateFormat("yyyy", getLocale(context));
+        }
         mIsDayShown = isDayShown;
         mIsMonthShown = isMonthShown;
         mIsTitleShown = isTitleShown;
@@ -98,6 +107,15 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         mDatePicker.setMinDate(minDate.getTimeInMillis());
         mDatePicker.setMaxDate(maxDate.getTimeInMillis());
         mDatePicker.init(defaultDate.get(Calendar.YEAR), defaultDate.get(Calendar.MONTH), defaultDate.get(Calendar.DAY_OF_MONTH), isDayShown, isMonthShown, this);
+    }
+
+    private Locale getLocale(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            //noinspection deprecation
+            return context.getResources().getConfiguration().locale;
+        }
     }
 
     @Override
