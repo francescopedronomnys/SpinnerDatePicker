@@ -5,11 +5,11 @@ group = 'com.github.drawers'
 version = '1.0.6'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 210
         versionName "2.1.0"
 
@@ -34,7 +34,7 @@ android {
 
 
 dependencies {
-    compile 'androidx.appcompat:appcompat:1.0.0'
+    compile 'androidx.appcompat:appcompat:1.2.0'
 }
 
 task sourcesJar(type: Jar) {
