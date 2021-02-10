@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -24,7 +25,7 @@ import java.util.Locale;
  * Created by rawsond on 25/08/17.
  */
 
-public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, DatePickerDialog.OnDateCancelListener, OnDateChangedListener {
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, DatePickerDialog.OnDateCancelListener, OnDateChangedListener, DatePickerDialog.OnDateNeutralListener {
 
     TextView dateTextView;
     Button dateButton;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
                 .context(MainActivity.this)
                 .callback(MainActivity.this)
                 .onCancel(MainActivity.this)
+                .onNeutral(MainActivity.this, "NEUTRAL")
                 .spinnerTheme(spinnerTheme)
                 .defaultDate(year, monthOfYear, dayOfMonth)
                 .build()
@@ -85,5 +87,10 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     @Override
     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         onDateSet(view, year, monthOfYear, dayOfMonth);
+    }
+
+    @Override
+    public void onNeutralPressed(DatePicker view) {
+        Toast.makeText(this, "Neutral pressed", Toast.LENGTH_SHORT).show();
     }
 }

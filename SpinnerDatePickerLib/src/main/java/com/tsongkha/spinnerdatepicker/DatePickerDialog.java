@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import java.text.DateFormat;
@@ -31,6 +32,8 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
     private final DatePicker mDatePicker;
     private final OnDateSetListener mCallBack;
     private final OnDateCancelListener mOnCancel;
+    @Nullable
+    private final OnDateNeutralListener mOnNeutral;
     private final DateFormat mTitleDateFormat;
 
     private boolean mIsDayShown = true;
@@ -64,11 +67,25 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
         void onCancelled(DatePicker view);
     }
 
+    /**
+     * Callback for when neutral button is used
+     */
+    public interface OnDateNeutralListener {
+        /**
+         * Called when cancel happens.
+         *
+         * @param view The view associated with this listener.
+         */
+        void onNeutralPressed(DatePicker view);
+    }
+
     DatePickerDialog(Context context,
                      int theme,
                      int spinnerTheme,
                      OnDateSetListener callBack,
                      OnDateCancelListener onCancel,
+                     @Nullable OnDateNeutralListener onNeutral,
+                     @Nullable CharSequence neutralText,
                      Calendar defaultDate,
                      Calendar minDate,
                      Calendar maxDate,
@@ -80,6 +97,7 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
 
         mCallBack = callBack;
         mOnCancel = onCancel;
+        mOnNeutral = onNeutral;
         if (isDayShown && isMonthShown) {
             mTitleDateFormat = DateFormat.getDateInstance(DateFormat.LONG);
         } else if (isMonthShown) {
@@ -98,6 +116,9 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                 this);
         setButton(BUTTON_NEGATIVE, context.getText(android.R.string.cancel),
                 this);
+        if (neutralText != null && onNeutral != null) {
+            setButton(BUTTON_NEUTRAL, neutralText, this);
+        }
 
         LayoutInflater inflater =
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -133,6 +154,13 @@ public class DatePickerDialog extends AlertDialog implements OnClickListener,
                 if (mOnCancel != null) {
                     mDatePicker.clearFocus();
                     mOnCancel.onCancelled(mDatePicker);
+                }
+                break;
+            }
+            case BUTTON_NEUTRAL: {
+                if(mOnNeutral != null) {
+                    mDatePicker.clearFocus();
+                    mOnNeutral.onNeutralPressed(mDatePicker);
                 }
                 break;
             }

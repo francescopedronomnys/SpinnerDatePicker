@@ -2,6 +2,8 @@ package com.tsongkha.spinnerdatepicker;
 
 import android.content.Context;
 
+import androidx.annotation.Nullable;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -10,6 +12,10 @@ public class SpinnerDatePickerDialogBuilder {
     private Context context;
     private DatePickerDialog.OnDateSetListener callBack;
     private DatePickerDialog.OnDateCancelListener onCancel;
+    @Nullable
+    private DatePickerDialog.OnDateNeutralListener onNeutral;
+    @Nullable
+    private CharSequence neutralText;
     private boolean isDayShown = true;
     private boolean isMonthShown = true;
     private boolean isTitleShown = true;
@@ -33,6 +39,12 @@ public class SpinnerDatePickerDialogBuilder {
 
     public SpinnerDatePickerDialogBuilder onCancel(DatePickerDialog.OnDateCancelListener onCancel) {
         this.onCancel = onCancel;
+        return this;
+    }
+
+    public SpinnerDatePickerDialogBuilder onNeutral(DatePickerDialog.OnDateNeutralListener onNeutral, CharSequence neutralText) {
+        this.onNeutral = onNeutral;
+        this.neutralText = neutralText;
         return this;
     }
 
@@ -86,6 +98,6 @@ public class SpinnerDatePickerDialogBuilder {
         if (maxDate.getTime().getTime() <= minDate.getTime().getTime())
             throw new IllegalArgumentException("Max date is not after Min date");
 
-        return new DatePickerDialog(context, theme, spinnerTheme, callBack, onCancel, defaultDate, minDate, maxDate, isMonthShown && isDayShown, isMonthShown, isTitleShown, customTitle);
+        return new DatePickerDialog(context, theme, spinnerTheme, callBack, onCancel, onNeutral, neutralText, defaultDate, minDate, maxDate, isMonthShown && isDayShown, isMonthShown, isTitleShown, customTitle);
     }
 }
